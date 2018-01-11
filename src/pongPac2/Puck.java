@@ -19,6 +19,7 @@ public class Puck
       //private Color innerColor;
       
       private int frictionFactor = 3;
+      private double PDFrictionFactor =  0.90;
       
       private PongAirHockey  myTable;
       // Image???
@@ -78,14 +79,33 @@ public class Puck
         xLoc += xSpeed;
         yLoc += ySpeed;
         
-        dealWithFriction();
+      
+        dealWithFrictionInAPDWay();
+        
+        
         checkForBounces();
+        
+      }
+      
+      
+      public void dealWithFrictionInAPDWay(){
+        
+        
         
       }
       
       public void dealWithFriction()
       {
         //let's deal tomorrow
+        
+        
+        
+        
+        
+        
+        
+        
+        
       }
       
       public void checkForBounces()
