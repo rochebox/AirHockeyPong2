@@ -17,10 +17,9 @@ public class Puck
       private  int xSpeed, ySpeed;
       //private Color outerColor;
       //private Color innerColor;
+      //private int frictionFactor = 3;
       
-      private int frictionFactor = 3;
       private double PDFrictionFactor =  0.90;
-      
       private PongAirHockey  myTable;
       // Image???
       
@@ -36,8 +35,8 @@ public class Puck
           puckD = size;
           myTable = t;
           
-          xSpeed = 0;
-          ySpeed = 0;
+          xSpeed = -70;
+          ySpeed = -40;
           xLoc= (int)( myTable.getWidth()/2 ) - (int)(puckD/2);
           yLoc= (int)( myTable.getHeight()/2 ) - (int)(puckD/2);
           //yLoc =  puckD/2;
@@ -76,33 +75,82 @@ public class Puck
       public void movePuck()
       {
         
+        checkLeftPaddle();
+        checkRightPaddle();
         xLoc += xSpeed;
         yLoc += ySpeed;
         
       
+ 
         dealWithFrictionInAPDWay();
-        
-        
+        //You may have your bounce check here or it could be in a method like mine.
         checkForBounces();
         
       }
       
+        private void checkLeftPaddle()
+        {
+          
+          // Step 1 find out if puck is near left paddle
+          // Find the center of the puck
+          int puckCX = xLoc + (int)(puckD/2);
+          int puckCY = yLoc + (int)(puckD/2);
+          // Find the center of the paddle
+          int paddleCX =myTable.getLeftPaddle().getXLoc() + (int)(myTable.getLeftPaddle().getPDiameter()/2);
+          int paddleCY =myTable.getLeftPaddle().getYLoc() + (int)(myTable.getLeftPaddle().getPDiameter()/2);
+          
+          //Now Get Ready for P theorem
+          
+          double A = paddleCY - puckCY;
+          double B = paddleCX - puckCX;
+          
+          // for homework find C
+          double C = Math.sqrt((A*A) + (B*B));
+          
+          if(C < (puckD/2) + (myTable.getLeftPaddle().getPDiameter()/2))
+          {
+            System.out.println("There is a left paddle collision");
+          } else {
+           // System.out.println("There is no left  collision");
+          }
+             
+          
+        }
+        
+        private void checkRightPaddle()
+        {
+          
+        }
+      
+      
+      
+      
+      
       
       public void dealWithFrictionInAPDWay(){
-        
-        
-        
+            xSpeed = (int) (xSpeed * PDFrictionFactor);
+            ySpeed = (int) (ySpeed * PDFrictionFactor);
+   
       }
+      
+      
+      //A couple of new accessor methods
+      public void setXSpeed(int newSpeed)
+      {
+          xSpeed = newSpeed;
+      }
+      
+      public void setYSpeed(int newSpeed)
+      {
+          ySpeed = newSpeed;
+      }
+      
+      
+      
       
       public void dealWithFriction()
       {
         //let's deal tomorrow
-        
-        
-        
-        
-        
-        
         
         
         

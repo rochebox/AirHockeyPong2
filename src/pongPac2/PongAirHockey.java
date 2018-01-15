@@ -92,7 +92,10 @@ public class PongAirHockey extends JPanel implements ActionListener, KeyListener
          // set up Puck stuff
          puckDiameter = (int)(pWidth/12);
          thePuck = new Puck(puckDiameter, this);
-     
+         thePuck.setXSpeed(100);
+         thePuck.setYSpeed(-100);
+         
+         
      
          //instantiate the paddles
          paddleDiameter = (int)(pWidth/15);
@@ -103,7 +106,7 @@ public class PongAirHockey extends JPanel implements ActionListener, KeyListener
          addKeyListener(this);
          
          // more timer set up....
-         t = new Timer(100, this);
+         t = new Timer(40, this);
          t.start();
      
    }
@@ -415,23 +418,34 @@ public class PongAirHockey extends JPanel implements ActionListener, KeyListener
   }
 
 
-  public void keyReleased(KeyEvent e)
-  {
-    
-  }
-  
-  
-  public int getRinkWidth()
-  {
-      return pWidth;
-  }
-  
-  public int getRinkHeight()
-  {
-      return pHeight;
-  }
-  
-  
+        public void keyReleased(KeyEvent e)
+        {
+          
+        }
+        
+        
+        public int getRinkWidth()
+        {
+            return pWidth;
+        }
+        
+        public int getRinkHeight()
+        {
+            return pHeight;
+        }
+        
+        //New to allow puck to access paddles and determine bumping....
+        public Paddle getLeftPaddle()
+        {
+          return leftPaddle;
+        }
+        
+        public Paddle getRightPaddle() 
+        {
+          return rightPaddle;
+        }
+        
+        
   
 
 } // this very very very last curly brace....

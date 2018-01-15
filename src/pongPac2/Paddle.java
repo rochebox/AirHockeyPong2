@@ -76,18 +76,18 @@ public class Paddle
         
         if( ySpeed < 0 )   // if this is true then paddle is moving up!!!
         {
-               if(yLoc < 0 )
+               if(yLoc < 2 )
                {
-                    yLoc = 0;   // this puts paddle on screen...
+                    yLoc = 2;   // this puts paddle on screen...
                     ySpeed = 0;
                }
         } 
         
         if( ySpeed > 0)   // i'm heading to the bottom wall..
         {
-               if(yLoc > myTable.getRinkHeight() - pDiameter )
+               if(yLoc > myTable.getRinkHeight() - pDiameter-2 )
                {
-                  yLoc = myTable.getRinkHeight() - pDiameter;
+                  yLoc = myTable.getRinkHeight() - pDiameter-2;
                   ySpeed = 0;
                }
         }
@@ -99,9 +99,9 @@ public class Paddle
           //This is for Left Side Stuff  part 1
           if(xSpeed < 0 )   //moving towards the goal
           {
-            if(xLoc < myTable.getGoalWidth())
+            if(xLoc < myTable.getGoalWidth() + 2)
             {
-              xLoc = myTable.getGoalWidth();
+              xLoc = myTable.getGoalWidth() + 2;
               xSpeed = 0;
             }
           }
@@ -109,9 +109,9 @@ public class Paddle
           //This is Left Side Stuff Part 2
           if(xSpeed > 0 )
           {
-              if(xLoc > (int)(myTable.getRinkWidth()/2) - pDiameter)
+              if( xLoc > (int)(myTable.getRinkWidth()/2) - (pDiameter+ 2))
               {
-                xLoc = (int)(myTable.getRinkWidth()/2) - pDiameter;
+                xLoc = (int)(myTable.getRinkWidth()/2) - (pDiameter +2);
                 xSpeed = 0;
               }
           }
@@ -123,15 +123,29 @@ public class Paddle
           
           // For homework write stuff here...
           
+        //This is for Left Side Stuff  part 1
+          if(xSpeed < 0 )   //moving towards the GOAL LINE
+          {
+            
+                if( xLoc < (int)(myTable.getRinkWidth()/2) + 2)
+                {
+                  xLoc = (int)(myTable.getRinkWidth()/2) + 2;
+                  xSpeed = 0;
+                }
+          }
           
+          if(xSpeed > 0)
+          {
+              if(  xLoc > (int)(myTable.getRinkWidth()) - (myTable.getGoalWidth() + 2) - pDiameter )
+              {
+                xLoc = (int)(myTable.getRinkWidth()) - (myTable.getGoalWidth() + 2) - pDiameter;
+                xSpeed = 0;
+            }
+            
+          }
+            
         }
-        
-        
-        
-        
-        
-        
-        
+            
     }
     
     
@@ -158,6 +172,21 @@ public class Paddle
       return xSpeed;
     }
   
+    //New to allow puck to determine distance...
+    public int getXLoc()
+    {
+      return xLoc;
+    }
+    //New Friday
+    public int getYLoc()
+    {
+      return yLoc;
+    }
+    //Also New Friday
+    public int getPDiameter()
+    {
+      return pDiameter;
+    }
   
   
   
