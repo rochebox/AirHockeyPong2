@@ -19,7 +19,7 @@ public class Puck
       //private Color innerColor;
       //private int frictionFactor = 3;
       
-      private double PDFrictionFactor =  0.90;
+      private double PDFrictionFactor =  0.96;
       private PongAirHockey  myTable;
       // Image???
       
@@ -28,6 +28,9 @@ public class Puck
       //private String puckFileName = "canada150.png";
       //private String puckFileName = "peterPuck.gif";
       private Image puckImage;
+      
+      //added after MLK day for springyness
+      private double bounceFactor = 20.0;
   
       // Constructors
       public Puck( int size, PongAirHockey t)
@@ -35,8 +38,8 @@ public class Puck
           puckD = size;
           myTable = t;
           
-          xSpeed = -70;
-          ySpeed = -40;
+          xSpeed = 0;
+          ySpeed = 0;
           xLoc= (int)( myTable.getWidth()/2 ) - (int)(puckD/2);
           yLoc= (int)( myTable.getHeight()/2 ) - (int)(puckD/2);
           //yLoc =  puckD/2;
@@ -89,31 +92,37 @@ public class Puck
       }
       
         private void checkLeftPaddle()
-        {
+        {  
+                // Step 1 find out if puck is near left paddle
+                // Find the center of the puck
+                int puckCX = xLoc + (int)(puckD/2);
+                int puckCY = yLoc + (int)(puckD/2);
+                // Find the center of the paddle
+                int paddleCX =myTable.getLeftPaddle().getXLoc() + (int)(myTable.getLeftPaddle().getPDiameter()/2);
+                int paddleCY =myTable.getLeftPaddle().getYLoc() + (int)(myTable.getLeftPaddle().getPDiameter()/2);
           
-          // Step 1 find out if puck is near left paddle
-          // Find the center of the puck
-          int puckCX = xLoc + (int)(puckD/2);
-          int puckCY = yLoc + (int)(puckD/2);
-          // Find the center of the paddle
-          int paddleCX =myTable.getLeftPaddle().getXLoc() + (int)(myTable.getLeftPaddle().getPDiameter()/2);
-          int paddleCY =myTable.getLeftPaddle().getYLoc() + (int)(myTable.getLeftPaddle().getPDiameter()/2);
+                //Now Get Ready for P theorem
+                
+                double A = paddleCY - puckCY;
+                double B = paddleCX - puckCX;
+                
+                // for homework find C
+                double C = Math.sqrt((A*A) + (B*B));
           
-          //Now Get Ready for P theorem
-          
-          double A = paddleCY - puckCY;
-          double B = paddleCX - puckCX;
-          
-          // for homework find C
-          double C = Math.sqrt((A*A) + (B*B));
-          
-          if(C < (puckD/2) + (myTable.getLeftPaddle().getPDiameter()/2))
-          {
-            System.out.println("There is a left paddle collision");
-          } else {
-           // System.out.println("There is no left  collision");
-          }
-             
+               // Now adjust movement of the puck if it is colliding with the paddle
+                if(C < (puckD/2) + (myTable.getLeftPaddle().getPDiameter()/2))
+                {
+                  //System.out.println("There is a left paddle collision");
+                  
+                  double myArcSin = Math.asin(A/C);
+                  double myArcCos = Math.acos(B/C);
+                  
+                 // System.out.println("myArcSin is " + myArcSin);
+                  
+                  xSpeed -= bounceFactor * Math.cos(myArcCos);
+                  ySpeed -= bounceFactor * Math.sin(myArcSin);
+                
+                }    
           
         }
         

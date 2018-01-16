@@ -92,8 +92,9 @@ public class PongAirHockey extends JPanel implements ActionListener, KeyListener
          // set up Puck stuff
          puckDiameter = (int)(pWidth/12);
          thePuck = new Puck(puckDiameter, this);
-         thePuck.setXSpeed(100);
-         thePuck.setYSpeed(-100);
+         //default speeds are 0
+         //thePuck.setXSpeed(100);
+         //thePuck.setYSpeed(-100);
          
          
      
@@ -106,7 +107,7 @@ public class PongAirHockey extends JPanel implements ActionListener, KeyListener
          addKeyListener(this);
          
          // more timer set up....
-         t = new Timer(40, this);
+         t = new Timer(60, this);
          t.start();
      
    }
